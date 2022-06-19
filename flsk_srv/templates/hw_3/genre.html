@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>Genre: {% block title %}{{ genre }}{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+      <header>
+        <div>
+          <h2>There are {{ count_genres[0] }} {{ genre }}-tracks in the Database:</h2>
+        </div>
+      </header>
+{% for track in tracks %}
+  <p>{{ track['artist'] }} - {{ track['title'] }}</p>
+  {% endfor %}
+{% endblock %}

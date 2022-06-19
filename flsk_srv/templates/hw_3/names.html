@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Names{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+      <header>
+        <div>
+          <h2>There are {{ count_artists[0] }} different artists in the database:</h2>
+        </div>
+      </header>
+{% for artist in artists %}
+  <p>{{ artist['artist'] }}</p>
+  {% endfor %}
+{% endblock %}

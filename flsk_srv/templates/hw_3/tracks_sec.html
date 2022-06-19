@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Length{% endblock %} of Tracks:</h1>
+{% endblock %}
+
+{% block content %}
+{% for track in tracks %}
+  <p>{{ track['title'] }} - {{ track['length'] }} sec</p>
+  {% endfor %}
+{% endblock %}
