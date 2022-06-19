@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Tracks{% endblock %} in the Database</h1>
+{% endblock %}
+
+{% block content %}
+      <header>
+        <div>
+          <h2>There are {{ count_tracks[0] }} tracks in the database:</h2>
+        </div>
+      </header>
+{% for track in tracks %}
+  <p>{{ track['artist'] }} - {{ track['title'] }}</p>
+  {% endfor %}
+{% endblock %}

@@ -1,19 +1,18 @@
-from flask import Flask, request
+from flask import Blueprint, request, render_template
 from faker import Faker
 import requests
 import json
 
-
 fake = Faker("uk_UA")
-flsk_app = Flask(__name__)
+bp = Blueprint('hw_2', __name__)
 
 
-@flsk_app.route('/')
-def hw_2():
-    return "<p>Welcome to homework 2!</p>"
+@bp.route('/')
+def hw_2_3():
+    return "<p>Welcome to homework 2 and 3!</p>"
 
 
-@flsk_app.route('/requirements/')
+@bp.route('/requirements/')
 def requirements():
     try:
         with open('requirements.txt', 'r') as requir:
@@ -26,17 +25,14 @@ def requirements():
         return '"requirements.txt" doesn\'t exist'
 
 
-@flsk_app.route('/generate-users/', methods=['GET'])
+@bp.route('/generate-users/', methods=['GET'])
 def generate_users():
-    num_usrs = request.args.get('usrs', '')
-    if num_usrs.isdigit():
-        num_usrs = int(num_usrs)
-    else:
-        num_usrs = 100
-    return ''.join([f'<pre>name: {fake.name():<30} email: {fake.ascii_free_email()}</pre>' for item in range(num_usrs)])
+    num_usrs = request.args.get('usrs', type=int, default=100)
+    return ''.join(
+        [f'<pre>name: {fake.name():<30} email: {fake.ascii_free_email()}</pre>' for item in range(num_usrs)])
 
 
-@flsk_app.route('/mean/')
+@bp.route('/mean/')
 def mean():
     with open('hw.csv', 'r', newline='') as hw_csv:
         hw_lst = hw_csv.readlines()
@@ -53,7 +49,7 @@ def mean():
         return f'<p>Average height: {av_hght_cm} cm</p><p>Average weight: {av_wght_kg} kg</p>'
 
 
-@flsk_app.route('/space/')
+@bp.route('/space/')
 def space():
     get_astronauts = requests.get('http://api.open-notify.org/astros.json')
     if get_astronauts.status_code == 200:
@@ -61,7 +57,3 @@ def space():
         return f'<p>Now there are {astronauts.get("number")} astronauts in space</p>'
     else:
         print('Server response error!')
-
-
-
-
